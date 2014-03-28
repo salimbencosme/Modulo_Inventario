@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <h:outputStylesheet name="./css/style.css"/>
+        <title>Modulo de Inventario</title>
+    </h:head>
+    <h:body>
+       
+        <div id="Menu">
+            
+            <h:form>
+                
+                   <p:growl id="messages"/>  
+      
+                        <p:menuButton value="Seleccione opcion">  
+                               <p:menuitem value="Crear Asiento Contable" update="messages"  url="asientosContables.xhtml" icon="ui-icon-document" />
+                              <p:menuitem value="Nuevo Inventario" update="messages"  url="inventarioNuevo.xhtml"  icon="ui-icon-disk"/>   
+                            <p:menuitem value="Eliminar Inventario" icon="ui-icon-close" url="inventarioEliminar.xhtml" ajax="false"/>  
+                            <p:separator />  
+                             <p:menuitem value="Pagina principal" url="asientosContables.xhtml" icon="ui-icon-extlink"/>
+                        </p:menuButton> 
+                   
+                   
+                <p:stack icon="./images/stack.png">   
+                    <p:menuitem value="Generar Reportes" icon="./images/reportes.png" url="reportes.xhtml" /> 
+                    <p:menuitem value="Generar Asientos Contables" icon="./images/contabilidad.png" url="asientosContables.xhtml" />
+                    <p:menuitem value="Gestionar Almacenes" icon="./images/almacenes.png" url="almacen.xhtml"/>
+                    <p:menuitem value="Gestionar Articulos" icon="./images/zip.png" url="index.xhtml"/> 
+                </p:stack> 
+                
+            </h:form>
+            
+                    
+        </div>
+       
+        <div class="content">
+            
+            <h1>Eliminar Iventario</h1>
+               
+            <div class="contentInterno">
+               
+                 <div  class="contentInternoAlineado">
+                    <br/> 
+                
+                <h:form>
+                
+                <h:panelGrid columns="3"  cellspacing="25">
+                
+                   <h:outputText value="Selecione" styleClass="outputText"/>
+                   <p:selectOneMenu  id="inventarioSelectOneMenu" value="#{inventarioEliminarBean.indexInventario}"  validator="#{inventarioEliminarBean.validateSelectedOneMenu}" required="true"  
+                                        rendered="true"   requiredMessage="Debe de seleccionar un inventario"   immediate="true">
+                       
+                       <f:selectItems  value="#{inventarioEliminarBean.listaInventarioSelectItem}"/>  
+                   
+                    </p:selectOneMenu> 
+                    <br/>
+                    
+                  
+                </h:panelGrid>
+           
+                
+                 <div class="buttonAlineado">
+                      <p:growl id="messages" showDetail="true" />  
+                      <p:commandButton value="Eliminar Inventario" styleClass="button white"   actionListener="#{inventarioEliminarBean.registrarInventariosEliminados}"   update="messages " >  
+                        <p:confirm header="Confirmacion" message="Esta seguro de eliminar el inventario?" icon="ui-icon-alert" />  
+                       
+                      </p:commandButton>  
+  
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update="idFormulario"/>  
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+                    </p:confirmDialog>  
+                     
+               
+                      
+                </div> 
+                 
+                 
+            </h:form>
+                
+               <br/>
+               <br/>
+              </div>   
+            </div>
+            
+            
+            
+            
+            
+        </div>
+        
+        
+    </h:body>
+</html>
+

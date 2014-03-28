@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <h:outputStylesheet name="./css/style.css"/>
+        <title>Modulo de Inventario</title>
+    </h:head>
+    <h:body>
+       
+        <div id="Menu">
+            
+            <h:form>
+                
+                   <p:growl id="messages"/>  
+      
+                        <p:menuButton value="Seleccione reporte"> 
+                          <p:menuitem value="Articulos" update="messages"  url="reportes.xhtml" icon="ui-icon-document" />
+                          <p:menuitem value="Almacenes" icon="ui-icon-document" url="reportesAlmacenes.xhtml" ajax="false"/> 
+                            <p:menuitem value="Transacciones" update="messages"  url="reportesTransacciones.xhtml"  icon="ui-icon-document"/>   
+                            <p:menuitem value="Asientos contables" update="messages" url="reportesAsientosContables.xhtml" icon="ui-icon-document" />  
+                            <p:menuitem value="Inventarios" icon="ui-icon-document" url="reportesInventarios.xhtml" ajax="false"/>  
+                             
+                            <p:separator />  
+                        
+                            <p:menuitem value="Pagina principal" url="reportes.xhtml" icon="ui-icon-extlink"/>  
+                        </p:menuButton> 
+                   
+                <p:stack icon="./images/stack.png">   
+                    <p:menuitem value="Generar Reportes" icon="./images/reportes.png" url="reportes.xhtml" /> 
+                    <p:menuitem value="Generar Asientos Contables" icon="./images/contabilidad.png" url="asientosContables.xhtml" />
+                    <p:menuitem value="Gestionar Almacenes" icon="./images/almacenes.png" url="almacen.xhtml"/>
+                    <p:menuitem value="Gestionar Articulos" icon="./images/zip.png" url="index.xhtml"/> 
+                </p:stack> 
+                
+            </h:form>
+            
+                    
+        </div>
+       
+        <div class="content">
+            
+            <h1>Reportes</h1>
+            
+            <div class="contentInterno">
+               
+                    
+                    <div id="barraBusqueda">
+                      <h:form>  
+                  <br/>           
+                          <h:panelGrid columns="2">
+                
+                              <p:selectOneMenu id="reportesSelectOneMenu" value="#{reportesAsientosContablesBean.indexSelected}">  
+                                        <f:selectItem itemLabel="Todos los asientos contables realizados" itemValue="0" />  
+                                      
+       
+                                </p:selectOneMenu> 
+                               
+                              <h:commandButton value="Buscar" action="#{reportesAsientosContablesBean.buscar()}" styleClass="button white" />
+                               
+                          </h:panelGrid>
+                        
+                        </h:form> 
+                    </div>
+             
+            
+                <h:dataTable  value="#{reportesAsientosContablesBean.obtenerReportesAsientosContables()}" var="asientos"  rowClasses="oddRows,evenRows" 
+                             headerClass="header"  styleClass="table" cellpadding="5" cellspacing="0">
+                
+               
+                  
+                <h:column>
+                    
+                    <f:facet  name="header">Tipo de Inventario</f:facet>
+                    #{asientos.DescripcionInventario}
+                </h:column>
+                    
+                   
+                      <h:column>
+                    
+                    <f:facet  name="header">Descripcion</f:facet>
+                    #{asientos.DescripcionAsientoContable}
+                </h:column>
+                    
+                   <h:column>
+                    
+                    <f:facet  name="header">Cuenta</f:facet>
+                    #{asientos.Cuenta}
+                </h:column> 
+                    
+                    <h:column>
+                    
+                    <f:facet  name="header">Tipo de movimiento</f:facet>
+                    #{asientos.Tipo_Movimiento}
+                </h:column> 
+                    
+                     <h:column>
+                    
+                    <f:facet  name="header">Fecha</f:facet>
+                    #{asientos.Fecha_Asiento}
+                </h:column> 
+                    
+                     <h:column>
+                    
+                    <f:facet  name="header">Monto</f:facet>
+                    #{asientos.Monto}
+                </h:column> 
+                    
+                     <h:column>
+                    
+                    <f:facet  name="header">Estado</f:facet>
+                    #{asientos.Estado}
+                </h:column> 
+                    
+            </h:dataTable> 
+                
+                 <br/>
+                <br/>
+                
+            </div>
+              
+            
+            
+            
+        </div>
+        
+        
+    </h:body>
+</html>
+

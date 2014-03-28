@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <h:outputStylesheet name="./css/style.css"/>
+        <title>Modulo de Inventario</title>
+    </h:head>
+    <h:body>
+       
+        <div id="Menu">
+            
+            <h:form>
+                
+                   <p:growl id="messages"/>  
+      
+                        <p:menuButton value="Seleccione opcion"> 
+                            <p:menuitem value="Articulos Disponibles" update="messages"  url="index.xhtml" icon="ui-icon-document" /> 
+                            <p:menuitem value="Salida Articulo" update="messages"  url="articulosSalida.xhtml"  icon="ui-icon-transferthick-e-w"/> 
+                            <p:menuitem value="Nuevo Articulo" update="messages"  url="articulos.xhtml"  icon="ui-icon-disk"/> 
+                            <p:menuitem value="Entrada Articulo" update="messages" url="articulosEntrada.xhtml" icon="ui-icon-arrowrefresh-1-w"/>  
+                            <p:menuitem value="Eliminar Articulo" icon="ui-icon-close" url="articulosEliminar.xhtml" ajax="false"/>  
+                            <p:separator />  
+                            <p:menuitem value="Pagina principal" url="index.xhtml" icon="ui-icon-extlink"/>  
+                        </p:menuButton> 
+                   
+                <p:stack icon="./images/stack.png">   
+                    <p:menuitem value="Generar Reportes" icon="./images/reportes.png" url="reportes.xhtml" /> 
+                    <p:menuitem value="Generar Asientos Contables" icon="./images/contabilidad.png" url="asientosContables.xhtml" />
+                    <p:menuitem value="Gestionar Almacenes" icon="./images/almacenes.png" url="almacen.xhtml"/>
+                    <p:menuitem value="Gestionar Articulos" icon="./images/zip.png" url="index.xhtml"/> 
+                </p:stack> 
+                
+            </h:form>
+            
+                    
+        </div>
+       
+        <div class="content">
+            
+            <h1>Articulos disponibles</h1>
+            
+            <div class="contentInterno">
+                
+            
+              
+                    <div id="barraBusqueda">
+                      <h:form>  
+                  <br/>           
+                          <h:panelGrid columns="4">
+                
+                              <h:outputText value="Buscar por descripcion" styleClass="outputText"/>
+                                <h:inputText id="buscadorInputText"   required="true" value="#{indexBean.descripcionArticulo}" 
+                                             requiredMessage="Ingrese una descripcion correcta." styleClass="inputText"/>
+                                <h:message for="descripcionInputText"   styleClass="error"/>
+                                <h:commandButton value="Buscar" action="#{indexBean.buscar()}" styleClass="button white"/>
+                               
+                          </h:panelGrid>
+                        
+                        </h:form> 
+                    </div>
+                
+                <br/>
+            
+                <h:dataTable  value="#{indexBean.obtenerArticulos()}" var="articulo"  rowClasses="oddRows,evenRows" 
+                             headerClass="header"  styleClass="table" cellpadding="5" cellspacing="0">
+                
+                <h:column>
+                    
+                    <f:facet  name="header">Id Articulo</f:facet>
+                    #{articulo.idArticulos}
+                </h:column>
+                  
+                    <h:column>
+                    
+                    <f:facet  name="header">Descripcion</f:facet>
+                    #{articulo.descripcionArticulo}
+                </h:column> 
+                    
+                <h:column>
+                    
+                    <f:facet  name="header">Tipo de Inventario</f:facet>
+                    #{articulo.descripcionInventario}
+                </h:column>
+                    
+                   
+                    
+                <h:column>
+                    
+                    <f:facet  name="header">Existencia</f:facet>
+                    #{articulo.Existencia}
+                </h:column>
+                    
+                
+                    
+                 <h:column>
+                    
+                    <f:facet  name="header">Costo Unitario</f:facet>
+                    #{articulo.CostoUnitario}
+                </h:column>   
+                 
+                    
+                <h:column>
+                    
+                    <f:facet  name="header">Estado</f:facet>
+                    #{articulo.Estado}
+                </h:column>    
+                
+            </h:dataTable> 
+          
+                  <br/>
+                <br/>
+            </div>
+              
+            
+            
+            
+        </div>
+        
+        
+    </h:body>
+</html>
+

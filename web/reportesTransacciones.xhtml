@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <h:outputStylesheet name="./css/style.css"/>
+        <title>Modulo de Inventario</title>
+    </h:head>
+    <h:body>
+
+        <div id="Menu">
+
+            <h:form>
+
+                <p:growl id="messages"/>  
+
+                <p:menuButton value="Seleccione reporte"> 
+                    <p:menuitem value="Articulos" update="messages"  url="reportes.xhtml" icon="ui-icon-document" />
+                    <p:menuitem value="Almacenes" icon="ui-icon-document" url="reportesAlmacenes.xhtml" ajax="false"/> 
+                    <p:menuitem value="Transacciones" update="messages"  url="reportesTransacciones.xhtml"  icon="ui-icon-document"/>   
+                    <p:menuitem value="Asientos contables" update="messages" url="reportesAsientosContables.xhtml" icon="ui-icon-document" />  
+                    <p:menuitem value="Inventarios" icon="ui-icon-document" url="reportesInventarios.xhtml" ajax="false"/>  
+
+                    <p:separator />  
+
+                    <p:menuitem value="Pagina principal" url="reportes.xhtml" icon="ui-icon-extlink"/>  
+                </p:menuButton> 
+
+                <p:stack icon="./images/stack.png">   
+                    <p:menuitem value="Generar Reportes" icon="./images/reportes.png" url="reportes.xhtml" /> 
+                    <p:menuitem value="Generar Asientos Contables" icon="./images/contabilidad.png" url="asientosContables.xhtml" />
+                    <p:menuitem value="Gestionar Almacenes" icon="./images/almacenes.png" url="almacen.xhtml"/>
+                    <p:menuitem value="Gestionar Articulos" icon="./images/zip.png" url="index.xhtml"/> 
+                </p:stack> 
+
+            </h:form>
+
+
+        </div>
+
+        <div class="content">
+
+            <h1>Reportes</h1>
+
+            <div class="contentInterno">
+
+
+                <div id="barraBusqueda">
+                    <h:form>  
+                        <br/>  
+
+                        <h:panelGrid columns="3"  id="panel">
+
+                            <h:outputText value="Filtrar por articulo" styleClass="outputText"/>
+                            <h:inputText id="descripcionInputText"  styleClass="inputText"  validator="#{reportesTransaccionesBean.validateExistenciaArticulo}" value="#{reportesTransaccionesBean.descripcion}" 
+                                         validatorMessage="La descripcion del ariticulo debe contener menos de 45 caracteres">
+
+                                <f:validateLength  maximum="45"/>
+
+                            </h:inputText>
+
+                            <br/>
+
+
+                        </h:panelGrid>
+                        <br/>
+
+
+                        <h:panelGrid columns="2">
+
+                            <p:selectOneMenu id="reportesSelectOneMenu" value="#{reportesTransaccionesBean.indexSelected}">  
+                                <f:selectItem itemLabel="Transacciones en general" itemValue="0" />
+                                <f:selectItem itemLabel="Transacciones de entrada articulo nuevo" itemValue="1" />
+                                <f:selectItem itemLabel="Transacciones de entrada articulo existente" itemValue="2" />
+                                <f:selectItem itemLabel="Transacciones de salida articulo " itemValue="3" />
+                                <f:selectItem itemLabel="Transacciones en general ordenadas por tipo de transacciones" itemValue="4" />
+                                <f:selectItem itemLabel="Transacciones en general ordenadas por fecha en forma acendente" itemValue="5" />
+                                <f:selectItem itemLabel="Transacciones en general ordenadas por fecha en forma descendente" itemValue="6" />
+                                <f:selectItem itemLabel="Transacciones en general ordenadas por cantidad en forma acendente" itemValue="7" />
+                                <f:selectItem itemLabel="Transacciones en general ordenadas por cantidad en forma descendente" itemValue="8" />
+                                <f:selectItem itemLabel="Transacciones en general ordenadas por monto en forma acendente" itemValue="9" />
+                                <f:selectItem itemLabel="Transacciones en general ordenadas por monto en forma descendente" itemValue="10" />
+                            </p:selectOneMenu> 
+
+                            <h:commandButton value="Buscar" action="#{reportesTransaccionesBean.buscar()}" styleClass="button white"/>
+
+                        </h:panelGrid>
+
+                    </h:form> 
+                </div>
+
+
+                <h:dataTable  value="#{reportesTransaccionesBean.obtenerReportesTransacciones()}" var="trans"  rowClasses="oddRows,evenRows" 
+                              headerClass="header"  styleClass="table" cellpadding="5" cellspacing="0">
+
+
+
+                    <h:column>
+
+                        <f:facet  name="header">Tipo Transaccion</f:facet>
+                            #{trans.DescripcionTransaccion}
+                    </h:column> 
+
+                    <h:column>
+
+                        <f:facet  name="header">Articulo</f:facet>
+                            #{trans.DescripcionArticulo}
+                    </h:column> 
+
+                    <h:column>
+
+                        <f:facet  name="header">Fecha</f:facet>
+                            #{trans.Fecha}
+                    </h:column> 
+
+                    <h:column>
+
+                        <f:facet  name="header">Cantidad</f:facet>
+                            #{trans.Cantidad}
+                    </h:column>  
+
+                    <h:column>
+
+                        <f:facet  name="header">Monto</f:facet>
+                            #{trans.Monto}
+                    </h:column> 
+
+                </h:dataTable> 
+
+                <br/>
+                <br/>
+
+            </div>
+
+
+
+
+        </div>
+
+
+    </h:body>
+</html>
+

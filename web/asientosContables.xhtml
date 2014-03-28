@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"  
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <h:outputStylesheet name="./css/style.css"/>
+        <title>Modulo de Inventario</title>
+    </h:head>
+    <h:body>
+       
+        <div id="Menu">
+            
+            <h:form>
+                
+                   <p:growl id="messages"/>  
+      
+                        <p:menuButton value="Seleccione opcion">  
+                               <p:menuitem value="Crear Asiento Contable" update="messages"  url="asientosContables.xhtml" icon="ui-icon-document" />
+                              <p:menuitem value="Nuevo Inventario" update="messages"  url="inventarioNuevo.xhtml"  icon="ui-icon-disk"/>   
+                            <p:menuitem value="Eliminar Inventario" icon="ui-icon-close" url="inventarioEliminar.xhtml" ajax="false"/>  
+                            <p:separator />  
+                             <p:menuitem value="Pagina principal" url="asientosContables.xhtml" icon="ui-icon-extlink"/>
+                        </p:menuButton> 
+                   
+                <p:stack icon="./images/stack.png">   
+                    <p:menuitem value="Generar Reportes" icon="./images/reportes.png" url="reportes.xhtml"/> 
+                    <p:menuitem value="Generar Asientos Contables" icon="./images/contabilidad.png" url="asientosContables.xhtml" />
+                    <p:menuitem value="Gestionar Almacenes" icon="./images/almacenes.png" url="almacen.xhtml"/>
+                    <p:menuitem value="Gestionar Articulos" icon="./images/zip.png" url="index.xhtml"/> 
+                </p:stack> 
+                
+            </h:form>
+            
+                    
+        </div>
+       
+        <div class="content">
+            
+            <h1>Asiento Contable</h1>
+               
+            <div class="contentInterno">
+             
+                  
+                <div  class="contentInternoAlineado">
+                <br/> 
+                <h:form>
+                
+                <h:panelGrid columns="3"  cellspacing="25">
+                
+                    <h:outputText value="Tipo de inventario" styleClass="outputText"/>
+                    <p:selectOneMenu  id="articulosSelectOneMenu" value="#{asientosContablesBean.indexTipoInventario}"  validator="#{asientosContablesBean.validateSelectedOneMenu}" required="true"  
+                                      valueChangeListener="#{asientosContablesBean.valueChangeMethod}"  rendered="true"   requiredMessage="Debe de seleccionar un Tipo de inventario"   immediate="true">
+                        <f:ajax  render="cuentaInputText"/>
+                        <f:selectItems  value="#{asientosContablesBean.listaTipoInventarioSelectItem}"/>  
+                   
+                    </p:selectOneMenu> 
+                    <br/>
+                
+                     <h:outputText value="Cuenta"  styleClass="outputText" />
+                     <h:inputText id="cuentaInputText"     disabled="true" required="true"    styleClass="inputText" value="#{asientosContablesBean.cuenta}"  />
+                    <br/>
+                    
+                  
+                      <h:outputText value="Tipo de movimiento" styleClass="outputText"/>
+                      <h:inputText id="tipoMovimientoInputText"  styleClass="inputText"  value="#{asientosContablesBean.tipoMovimiento}"  required="true"
+                                 requiredMessage="Ingrese un tipo de movimiento correcto" validatorMessage="El tipo de movimiento debe de tener menos o igual a dos caracteres.">
+                    
+                        <f:validateLength  maximum="2"/>
+                        
+                    
+                    </h:inputText>
+                    
+                    <br/>
+                    
+                    
+                    <h:outputText value="Descripcion"/>
+                 <p:inputTextarea rows="5" cols="30" counter="counter" maxlength="45"       
+                                  accesskey="" counterTemplate="{0} caracteres restantes." autoResize="true" value="#{asientosContablesBean.descripcion}" validatorMessage="Debe de ingresar una descripcion de almenos 5 caracteres">  
+                     <f:validateLength minimum="5" maximum="45"/>
+                 </p:inputTextarea>
+
+        <h:outputText id="counter" />  
+                
+                </h:panelGrid>
+                
+                 <div class="buttonAlineado">
+                        
+                     <h:commandButton value="Generar" styleClass="button white" style="buttonAlineado" action="#{asientosContablesBean.generarAsientoContable()}" />
+                      
+                </div> 
+                <br/>
+                <br/>
+                
+            </h:form>
+                
+                
+            </div>
+            
+            
+            </div> 
+            
+            
+        </div>
+        
+        
+    </h:body>
+</html>
+
